@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
+    'quran',
+    'exams',
+    'complaints',
+    'stats',
+    'rest_framework',      # لأننا هنستخدم DRF لاحقاً
+    'storages',            # لتحميل الوسائط على S3
 ]
 
 MIDDLEWARE = [
