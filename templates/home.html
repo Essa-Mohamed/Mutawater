@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}الرئيسية{% endblock %}
+
+{% block content %}
+  <div class="welcome">
+    <h2>مرحباً يا {{ student_name }}!</h2>
+    <ul class="main-menu">
+      <li><a href="{% url 'exams:select_scope' %}">📝 بدء اختبار</a></li>
+      <li><a href="{% url 'complaints:create_complaint' %}">✉️ الشكاوى</a></li>
+      <li><a href="{% url 'stats:overview' %}">📊 الإحصائيات</a></li>
+    </ul>
+    {% if user.is_authenticated %}
+      <p class="logout-small">
+        <a href="{% url 'logout' %}">تسجيل خروج</a>
+      </p>
+    {% else %}
+      <p class="logout-small">
+        <a href="{% url 'login' %}">تسجيل دخول</a>
+      </p>
+    {% endif %}
+  </div>
+{% endblock %}

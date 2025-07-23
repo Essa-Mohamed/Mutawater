@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}أدخل اسمك{% endblock %}
+
+{% block content %}
+  <h2>مرحباً! من فضلك أدخل اسمك للمتابعة:</h2>
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="اسمك هنا" required autofocus>
+    <button type="submit">التالي</button>
+  </form>
+{% endblock %}

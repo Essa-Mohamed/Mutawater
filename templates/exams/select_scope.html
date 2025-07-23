@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}اختيار نطاق الاختبار{% endblock %}
+
+{% block content %}
+  <h2>اختر النطاق اللي عايز تختبر فيه:</h2>
+  <form method="post" id="scope-form">
+    {% csrf_token %}
+    <div class="group">
+      <fieldset id="field-juzs">
+        <legend>الأجزاء</legend>
+        {{ form.juzs }}
+      </fieldset>
+      <fieldset id="field-hizbs">
+        <legend>الأحزاب</legend>
+        {{ form.hizbs }}
+      </fieldset>
+      <fieldset id="field-quarters">
+        <legend>الأرباع</legend>
+        {{ form.quarters }}
+      </fieldset>
+    </div>
+    <button type="submit">التالي</button>
+  </form>
+
+  <script>
+    // خريطة من Juz → مجموعة Quarter IDs
+    const juzToQuarters = {{ juz_to_quarters_json|safe }};
+    // خريطة من Hizb → مجموعة Quarter IDs
+    const hizbToQuarters = {{ hizb_to_quarters_json|safe }};
+
+    function updateVisibility() {
+      // نجمع كل الربع المختار أو المرتبط بجزء/حزب
+      let hideQ = new Set();
+      document.querySelectorAll('#field-juzs input:checked').forEach(cb=>{
+        (juzToQuarters[cb.value]||[]).forEach(q=>hideQ.add(q));
+      });
+      document.querySelectorAll('#field-hizbs input:checked').forEach(cb=>{
+        (hizbToQuarters[cb.value]||[]).forEach(q=>hideQ.add(q));
+      });
+      // أخفي كل checkboxes للربع ضمن hideQ
+      document.querySelectorAll('#field-quarters input').forEach(cb=>{
+        let wrapper = cb.closest('li') || cb.parentNode;
+        if (hideQ.has(parseInt(cb.value))) wrapper.style.display = 'none';
+        else wrapper.style.display = '';
+      });
+    }
+
+    document.querySelectorAll('#scope-form input').forEach(cb=>{
+      cb.addEventListener('change', updateVisibility);
+    });
+    // تهيئة
+    updateVisibility();
+  </script>
+{% endblock %}

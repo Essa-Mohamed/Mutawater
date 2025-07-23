@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}السؤال {{ q_no }}{% endblock %}
+
+{% block content %}
+<h2>السؤال رقم {{ q_no }}</h2>
+<p><strong>نص الآية:</strong> {{ verse_text }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  <div>
+    <label>اختر الربع:</label><br>
+    {% for q in quarters %}
+      <label>
+        <input type="radio" name="selected_quarter" value="{{ q.id }}" required>
+        {{ q }}
+      </label><br>
+    {% endfor %}
+  </div>
+
+  <div>
+    <label>اختر الصفحة:</label><br>
+    {% for p in pages %}
+      <label>
+        <input type="radio" name="selected_page" value="{{ p }}" required>
+        صفحة {{ p }}
+      </label><br>
+    {% endfor %}
+  </div>
+
+  <div>
+    <label>اختر نصف الصفحة:</label><br>
+    {% for code, label in halves %}
+      <label>
+        <input type="radio" name="selected_half" value="{{ code }}" required>
+        {{ label }}
+      </label><br>
+    {% endfor %}
+  </div>
+
+  <button type="submit">إرسال</button>
+</form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}أدخل اسمك{% endblock %}
+
+{% block content %}
+  <div class="enter-name">
+    <h2>مرحباً! اكتب اسمك للبدء:</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.student_name.label_tag }}<br>
+      {{ form.student_name }}<br><br>
+      <button type="submit">ابدأ</button>
+    </form>
+  </div>
+{% endblock %}

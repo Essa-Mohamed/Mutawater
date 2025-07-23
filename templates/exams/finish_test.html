@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}نتيجة الاختبار{% endblock %}
+
+{% block content %}
+<h2>انتهى الاختبار</h2>
+<p>الدرجة: {{ correct }} من {{ total }}</p>
+<a href="{% url 'exams:select_scope' %}">ابدأ اختبار جديد</a>
+{% endblock %}
